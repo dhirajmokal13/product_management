@@ -22,6 +22,7 @@ app.get('/editproduct', async (req, res) => {
     const result = await product.find();
     res.render("editproduct", { title: "Update Product", product_list: result });
 })
+
 app.post('/addproducts', async (req, res) => {
     const { pname, pprice, pdesc } = req.body;
     const pr = new product({
@@ -32,11 +33,13 @@ app.post('/addproducts', async (req, res) => {
     await pr.save();
     res.render('admin', { title: "Admin Panel", perform: true })
 })
+
 app.post('/updateproduct', async (req, res) => {
     const { pname, pprice, pdesc, id } = req.body;
     let rest = await product.updateOne({_id:id}, {$set:{pname:pname,pprice:pprice,pdesc:pdesc}});
     res.redirect('/editproduct');
 })
+
 app.listen(port, () => {
     console.log(`http://127.0.0.1:${port}`)
 })
